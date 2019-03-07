@@ -1,8 +1,12 @@
 package com.project.base.objects;
 
+import com.project.base.config.PasswordMatches;
+import com.project.base.config.ValidEmail;
+
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
+@PasswordMatches
 public class UserDto {
 
     @NotNull
@@ -19,6 +23,7 @@ public class UserDto {
     private String password;
     private String matchingPassword;
 
+    @ValidEmail
     @NotNull
     @NotEmpty
     private String email;
