@@ -1,6 +1,7 @@
 package com.project.base.controllers;
 
 import com.project.base.objects.UserDto;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -22,13 +23,41 @@ public class UserController {
         return "registration";
     }
 
-    public ModelAndView registerUserAccount(
-            @ModelAttribute("user") @Valid UserDto accountDto,
-            BindingResult result,
-            WebRequest request,
-            Errors errors){
+//    public ModelAndView registerUserAccount(
+//            @ModelAttribute("user") @Valid UserDto accountDto,
+//            BindingResult result,
+//            WebRequest request,
+//            Errors errors) {
+//
+//        return null;
+//    }
 
-        return null;
+
+    @RequestMapping(value="/user/registration", method=RequestMethod.POST)
+    public ModelAndView registerUserAccount
+            (@ModelAttribute("user") @Valid UserDto accountDto,
+             BindingResult result,
+             WebRequest request,
+             Errors errors){
+        User registered = new User();
+        if (!result.hasErrors()) {
+            registered = createUserAccount(accountDto, result);
+        }
+        if (registered == null) {
+            result.rejectValue("email", "message.regError");
+        }
+
+
+    }
+
+    private User createUserAccount(UserDto accountDto, BindingResult result) {
+        User registered = null;
+        try {
+            registered = service.registerNewUserAccount(accountDto);
+        } catch (EmailExistsException e) {
+            return null;
+        }
+        return registered;
     }
 
 
