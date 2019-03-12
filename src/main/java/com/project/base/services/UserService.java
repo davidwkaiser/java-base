@@ -1,6 +1,7 @@
 package com.project.base.services;
 
 import com.project.base.objects.UserDto;
+import com.project.base.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Service;

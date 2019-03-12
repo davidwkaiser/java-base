@@ -1,7 +1,8 @@
 package com.project.base.controllers;
 
 import com.project.base.objects.UserDto;
-import org.springframework.security.core.userdetails.User;
+//import org.springframework.security.core.userdetails.User;
+import org.springframework.boot.autoconfigure.security.SecurityProperties;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -39,7 +40,7 @@ public class UserController {
              BindingResult result,
              WebRequest request,
              Errors errors){
-        User registered = new User();
+        SecurityProperties.User registered = new SecurityProperties.User();
         if (!result.hasErrors()) {
             registered = createUserAccount(accountDto, result);
         }
@@ -50,8 +51,8 @@ public class UserController {
 
     }
 
-    private User createUserAccount(UserDto accountDto, BindingResult result) {
-        User registered = null;
+    private SecurityProperties.User createUserAccount(UserDto accountDto, BindingResult result) {
+        SecurityProperties.User registered = null;
         try {
             registered = service.registerNewUserAccount(accountDto);
         } catch (EmailExistsException e) {
